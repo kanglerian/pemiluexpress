@@ -1,6 +1,6 @@
 CREATE TABLE `peserta` (
   `id` int PRIMARY KEY AUTO_INCREMENT,
-  `nim` varchar(255),
+  `nim` varchar(255) UNIQUE,
   `nama_lengkap` varchar(255),
   `kelas` varchar(255),
   `prodi_id` int,
@@ -9,6 +9,7 @@ CREATE TABLE `peserta` (
 );
 
 CREATE TABLE `pemilihan` (
+  `id` int PRIMARY KEY AUTO_INCREMENT,
   `pemilih_id` int,
   `paslon_id` int,
   `created_at` date,
@@ -54,3 +55,5 @@ ALTER TABLE `peserta` ADD FOREIGN KEY (`prodi_id`) REFERENCES `prodi` (`id`);
 ALTER TABLE `paslon` ADD FOREIGN KEY (`ketua_id`) REFERENCES `peserta` (`id`);
 
 ALTER TABLE `paslon` ADD FOREIGN KEY (`wakil_id`) REFERENCES `peserta` (`id`);
+
+ALTER TABLE `pemilihan` ADD FOREIGN KEY (`paslon_id`) REFERENCES `paslon` (`id`);

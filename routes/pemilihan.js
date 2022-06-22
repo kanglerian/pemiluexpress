@@ -2,21 +2,20 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    Peserta,
-    Prodi
+    Pemilihan, Pemilih, Paslon
 } = require('../models');
 
 router.get('/', async (req, res) => {
     try {
-        const peserta = await Peserta.findAll({
-            include: [{
-                model: Prodi,
-                as: 'Prodi'
-            }],
+        const pemilihan = await Pemilihan.findAll({
+            include: [
+                {model: Pemilih, as: 'Pemilih'},
+                {model: Paslon, as: 'Paslon'},
+            ]
         });
         res.json({
             status: 'success',
-            data: peserta,
+            data: pemilihan,
         });
     } catch (error) {
         console.log(error);
@@ -25,7 +24,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async(req, res) => {
     try {
-        await Peserta.create(req.body);
+        await Pemilihan.create(req.body);
         res.json({message: `Data baru telah disimpan.`});
     } catch (error) {
         console.log(error);
@@ -34,7 +33,7 @@ router.post('/', async(req, res) => {
 
 router.patch('/', async(req, res) => {
     try {
-        await Peserta.update(req.body, {
+        await Pemilihan.update(req.body, {
             where: {
                 id: req.body.id
             }
@@ -47,7 +46,7 @@ router.patch('/', async(req, res) => {
 
 router.delete('/', async(req, res) => {
     try {
-        await Peserta.destroy({
+        await Pemilihan.destroy({
             where: {
                 id:req.body.id
             }
@@ -57,5 +56,6 @@ router.delete('/', async(req, res) => {
         console.log(error);
     }
 });
+
 
 module.exports = router;

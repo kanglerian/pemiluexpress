@@ -1,12 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
-    const Peserta = sequelize.define('Peserta',{
+    const Pemilih = sequelize.define('Pemilih',{
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             allowNull: false,
         },
-        nim: {
+        no_identitas: {
             type: DataTypes.STRING,
             unique: true,
             allowNull: false,
@@ -15,13 +15,13 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        kelas: {
+        password: {
             type: DataTypes.STRING,
             allowNull: true,
         },
-        prodi_id: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
+        status: {
+            type: DataTypes.STRING,
+            allowNull: false,
         },
         createdAt: {
             type: DataTypes.DATE,
@@ -34,15 +34,14 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         }
     },{
-        tableName: 'peserta',
+        tableName: 'pemilih',
         timestamps: true,
     });
 
-    Peserta.associate = (models) => {
-        Peserta.belongsTo(models.Prodi, {foreignKey: 'prodi_id'});
-        Peserta.hasMany(models.Paslon, {as: 'Ketua', foreignKey: 'ketua_id'});
-        Peserta.hasMany(models.Paslon, {as: 'Wakil', foreignKey: 'wakil_id'});
+
+    Pemilih.associate = (models) => {
+        Pemilih.hasMany(models.Pemilihan, {as: 'Pemilih', foreignKey: 'pemilih_id'});
     }
 
-    return Peserta;
+    return Pemilih;
 }

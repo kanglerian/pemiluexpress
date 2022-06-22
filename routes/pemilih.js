@@ -2,21 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    Peserta,
-    Prodi
+    Pemilih
 } = require('../models');
 
 router.get('/', async (req, res) => {
     try {
-        const peserta = await Peserta.findAll({
-            include: [{
-                model: Prodi,
-                as: 'Prodi'
-            }],
-        });
+        const pemilih = await Pemilih.findAll();
         res.json({
             status: 'success',
-            data: peserta,
+            data: pemilih,
         });
     } catch (error) {
         console.log(error);
@@ -25,7 +19,7 @@ router.get('/', async (req, res) => {
 
 router.post('/', async(req, res) => {
     try {
-        await Peserta.create(req.body);
+        await Pemilih.create(req.body);
         res.json({message: `Data baru telah disimpan.`});
     } catch (error) {
         console.log(error);
@@ -34,7 +28,7 @@ router.post('/', async(req, res) => {
 
 router.patch('/', async(req, res) => {
     try {
-        await Peserta.update(req.body, {
+        await Pemilih.update(req.body, {
             where: {
                 id: req.body.id
             }
@@ -47,7 +41,7 @@ router.patch('/', async(req, res) => {
 
 router.delete('/', async(req, res) => {
     try {
-        await Peserta.destroy({
+        await Pemilih.destroy({
             where: {
                 id:req.body.id
             }
