@@ -23,6 +23,26 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/:id', async (req, res) => {
+    try {
+        const peserta = await Peserta.findOne({
+            include: [{
+                model: Prodi,
+                as: 'Prodi'
+            }],
+            where: {
+                id: req.params.id
+            }
+        });
+        res.json({
+            status: 'success',
+            data: peserta,
+        });
+    } catch (error) {
+        console.log(error);
+    }
+});
+
 router.post('/', async(req, res) => {
     try {
         await Peserta.create(req.body);
