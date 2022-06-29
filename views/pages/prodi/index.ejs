@@ -1,0 +1,126 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahProdi">Tambah data</button>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Prodi</th>
+              <th>Kaprodi</th>
+              <th>Fakultas</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% let no=1; %>
+              <% data.forEach(prodi=> { %>
+                <tr>
+                  <td>
+                    <%= no++ %>
+                  </td>
+                  <td>
+                    <%= prodi.nama_prodi %>
+                  </td>
+                  <td>
+                    <%= prodi.kaprodi %>
+                  </td>
+                  <td>
+                    <%= prodi.fakultas %>
+                  </td>
+                  <td>
+                    <button type="button" style="border: none;" data-target="#editProdi<%= prodi.id %>" data-toggle="modal"
+                      class="badge badge-warning">edit</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="editProdi<%= prodi.id %>" tabindex="-1" role="dialog">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Edit <%= prodi.nama_prodi %></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <form method="POST" action="/prodi/update?_method=PATCH">
+                            <div class="modal-body">
+                              <input type="hidden" name="id" value="<%= prodi.id %>">
+                              <div class="form-group">
+                                <label>Nama Program</label>
+                                <input type="text" class="form-control" name="nama_prodi"
+                                  value="<%= prodi.nama_prodi %>">
+                              </div>
+                              <div class="form-group">
+                                <label>Kaprodi</label>
+                                <input type="text" class="form-control" name="kaprodi"
+                                value="<%= prodi.kaprodi %>">
+                              </div>
+                              <div class="form-group">
+                                <label>Fakultas</label>
+                                <input type="text" class="form-control" name="fakultas"
+                                value="<%= prodi.fakultas %>">
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                              <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <form action="/prodi/hapus?_method=DELETE" method="POST" class="d-inline">
+                      <input type="hidden" name="id" value="<%= prodi.id %>">
+                      <button type="submit" class="badge badge-danger" style="border: none;">hapus</button>
+                    </form>
+                  </td>
+                </tr>
+                <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- /.container-fluid -->
+
+<!-- Modal -->
+<div class="modal fade" id="tambahProdi" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Program Studi</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="/prodi/tambah">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Nama Program</label>
+            <input type="text" class="form-control" name="nama_prodi" placeholder="Tambah program studi disini...">
+          </div>
+          <div class="form-group">
+            <label>Kaprodi</label>
+            <input type="text" class="form-control" name="kaprodi" placeholder="Tambah kaprodi disini...">
+          </div>
+          <div class="form-group">
+            <label>Fakultas</label>
+            <input type="text" class="form-control" name="fakultas" placeholder="Tambah fakultas disini...">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
