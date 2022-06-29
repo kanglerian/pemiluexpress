@@ -9,7 +9,6 @@ CREATE TABLE `peserta` (
 );
 
 CREATE TABLE `pemilihan` (
-  `id` int PRIMARY KEY AUTO_INCREMENT,
   `pemilih_id` int,
   `paslon_id` int,
   `created_at` date,
