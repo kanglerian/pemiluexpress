@@ -1,0 +1,139 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahPeserta">Tambah data</button>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>NIM</th>
+              <th>Nama Lengkap</th>
+              <th>Kelas</th>
+              <th>Program Studi</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% let no=1; %>
+              <% data.forEach(peserta => { %>
+                <tr>
+                  <td>
+                    <%= no++ %>
+                  </td>
+                  <td>
+                    <%= peserta.nim %>
+                  </td>
+                  <td>
+                    <%= peserta.nama_lengkap %>
+                  </td>
+                  <td>
+                    <%= peserta.kelas %>
+                  </td>
+                  <td>
+                    <%= peserta.Prodi.nama_prodi %>
+                  </td>
+                  <td>
+                    <button type="button" style="border: none;" data-target="#editPeserta<%= peserta.id %>" data-toggle="modal"
+                      class="badge badge-warning">edit</button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="editPeserta<%= peserta.id %>" tabindex="-1" role="dialog">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle"><%= peserta.nama_lengkap %></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <form method="POST" action="/peserta/update?_method=PATCH">
+                            <div class="modal-body">
+                              <input type="hidden" name="id" value="<%= peserta.id %>">
+                              <div class="form-group">
+                                <label>NIM</label>
+                                <input type="text" class="form-control" name="nim"
+                                  value="<%= peserta.nim %>">
+                              </div>
+                              <div class="form-group">
+                                <label>Nama Lengkap</label>
+                                <input type="text" class="form-control" name="nama_lengkap"
+                                  value="<%= peserta.nama_lengkap %>">
+                              </div>
+                              <div class="form-group">
+                                <label>Kelas</label>
+                                <input type="text" class="form-control" name="kelas"
+                                value="<%= peserta.kelas %>">
+                              </div>
+                              <div class="form-group">
+                                <label>Prodi</label>
+                                <input type="text" class="form-control" name="prodi_id"
+                                value="<%= peserta.prodi_id %>">
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                              <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <form action="/peserta/hapus?_method=DELETE" method="POST" class="d-inline">
+                      <input type="hidden" name="id" value="<%= peserta.id %>">
+                      <button type="submit" class="badge badge-danger" style="border: none;">hapus</button>
+                    </form>
+                  </td>
+                </tr>
+                <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- /.container-fluid -->
+
+<!-- Modal -->
+<div class="modal fade" id="tambahPeserta" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Peserta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="/peserta/tambah">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>No. Induk Mahasiswa</label>
+            <input type="text" class="form-control" name="nim" placeholder="Tambah NIM disini...">
+          </div>
+          <div class="form-group">
+            <label>Nama Lengkap</label>
+            <input type="text" class="form-control" name="nama_lengkap" placeholder="Tambah nama lengkap disini...">
+          </div>
+          <div class="form-group">
+            <label>Kelas</label>
+            <input type="text" class="form-control" name="kelas" placeholder="Tambah kelas disini...">
+          </div>
+          <div class="form-group">
+            <label>Prodi</label>
+            <input type="text" class="form-control" name="prodi_id" placeholder="Tambah program studi disini...">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

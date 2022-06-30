@@ -16,6 +16,7 @@ const pemilihRouter = require('./routes/pemilih');
 const pemilihanRouter = require('./routes/pemilihan');
 
 const prodiDashboardRouter = require('./routes/admin/prodi');
+const pesertaDashboardRouter = require('./routes/admin/peserta');
 
 const app = express();
 
@@ -43,6 +44,7 @@ app.use('/api/pemilihan', pemilihanRouter);
 
 
 app.use('/prodi', prodiDashboardRouter);
+app.use('/peserta', pesertaDashboardRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

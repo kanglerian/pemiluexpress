@@ -11,7 +11,8 @@ router.get('/', async (req, res) => {
     res.render('pages/prodi/index',{
       layout: 'layouts/dashboard',
       title: 'Program Studi',
-      data: prodi
+      data: prodi,
+      url: req.originalUrl
     });
   } catch (error) {
     console.log(error);
