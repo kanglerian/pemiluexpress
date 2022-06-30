@@ -2,24 +2,28 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    Peserta,
-    Prodi
+    Paslon, Peserta, Prodi
 } = require('../../models');
 
-router.get('/', async (req, res) => {
+router.get('/', async(req, res) => {
     try {
-        const prodi = await Prodi.findAll();
+        const paslon = await Paslon.findAll({
+            include: [
+                {model: Peserta, as: 'Ketua'},
+                {model: Peserta, as: 'Wakil'}
+            ]
+        });
         const peserta = await Peserta.findAll({
             include: [{
                 model: Prodi,
                 as: 'Prodi'
             }],
         });
-        res.render('pages/peserta/index',{
+        res.render('pages/paslon/index',{
             layout: 'layouts/dashboard',
-            title: 'Peserta',
-            data: peserta,
-            prodi: prodi,
+            title: 'Paslon',
+            data: paslon,
+            peserta: peserta,
             url: req.originalUrl
         });
     } catch (error) {
@@ -29,7 +33,7 @@ router.get('/', async (req, res) => {
 
 router.post('/tambah', async(req, res) => {
     try {
-        await Peserta.create(req.body);
+        await Paslon.create(req.body);
         res.redirect('back');
     } catch (error) {
         console.log(error);
@@ -38,7 +42,7 @@ router.post('/tambah', async(req, res) => {
 
 router.patch('/update', async(req, res) => {
     try {
-        await Peserta.update(req.body, {
+        await Paslon.update(req.body, {
             where: {
                 id: req.body.id
             }
@@ -51,12 +55,12 @@ router.patch('/update', async(req, res) => {
 
 router.delete('/hapus', async(req, res) => {
     try {
-        await Peserta.destroy({
+        await Paslon.destroy({
             where: {
-                id:req.body.id
+                id: req.body.id
             }
         });
-        res.redirect('back');s
+        res.redirect('back');
     } catch (error) {
         console.log(error);
     }

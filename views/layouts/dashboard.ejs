@@ -56,9 +56,37 @@
 
             <!-- Heading -->
             <div class="sidebar-heading">
+                Kampanye
+            </div>
+
+            <!-- Nav Item - Tables -->
+            <li class="nav-item <%= url === '/paslon' ? 'active' : '' %>">
+                <a class="nav-link" href="/paslon">
+                    <i class="fas fa-users"></i>
+                    <span>Paslon</span></a>
+            </li>
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item">
+                <a class="nav-link" href="index.html">
+                    <i class="fas fa-vote-yea"></i>
+                    <span>Voting</span></a>
+            </li>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <!-- Heading -->
+            <div class="sidebar-heading">
                 Informasi
             </div>
 
+            <!-- Nav Item - Tables -->
+            <li class="nav-item <%= url === '/pemilih' ? 'active' : '' %>">
+                <a class="nav-link" href="/pemilih">
+                    <i class="fas fa-users-cog"></i>
+                    <span>Pemilih</span></a>
+            </li>
             <!-- Nav Item - Tables -->
             <li class="nav-item <%= url === '/peserta' ? 'active' : '' %>">
                 <a class="nav-link" href="/peserta">

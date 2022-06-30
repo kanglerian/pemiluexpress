@@ -1,0 +1,222 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahPaslon">Tambah data</button>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>No Urut</th>
+              <th>Ketua</th>
+              <th>Wakil Ketua</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% let no=1; %>
+              <% data.forEach(paslon=> { %>
+                <tr>
+                  <td>
+                    <%= no++ %>
+                  </td>
+                  <td>
+                    <%= paslon.no_urut %>
+                  </td>
+                  <td>
+                    <%= paslon.Ketua.nama_lengkap %>
+                  </td>
+                  <td>
+                    <%= paslon.Wakil.nama_lengkap %>
+                  </td>
+                  <td>
+                    <button type="button" data-toggle="modal" data-target="#detail<%= paslon.id %>"
+                      class="badge badge-primary" style="border: none;">detail</button>
+
+                    <div class="modal fade" id="detail<%= paslon.id %>" tabindex="-1" role="dialog">
+                      <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+                          <div class="modal-body">
+                            <img src="<%= paslon.image %>" class="img-fluid">
+                            <div class="text-center mt-3">
+                              <h3 class="btn btn-danger">
+                                <%= paslon.no_urut %>
+                              </h3>
+                              <h4 class="font-weight-bold mt-2">
+                                <%= paslon.Ketua.nama_lengkap %> & <%= paslon.Wakil.nama_lengkap %>
+                              </h4>
+                            </div>
+                            <div class="mt-3 text-center">
+                              <h5>Visi</h5>
+                              <p>
+                                <%= paslon.visi %>
+                              </p>
+                            </div>
+                            <div class="mt-3 text-center">
+                              <h5>Misi</h5>
+                              <p>
+                                <%= paslon.misi %>
+                              </p>
+                            </div>
+                            <div class="text-center mt-2">
+                              <button type="button" class="text-center btn btn-danger"><i class="fab fa-youtube"></i>
+                                Tonton Video</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button type="button" data-toggle="modal" data-target="#edit<%= paslon.id %>"
+                      class="badge badge-warning" style="border: none;">edit</button>
+
+                    <div class="modal fade" id="edit<%= paslon.id %>" tabindex="-1" role="dialog">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title">Edit Paslon <%= paslon.no_urut %>
+                            </h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <form method="POST" action="/paslon/update?_method=PATCH">
+                            <div class="modal-body">
+                              <input type="hidden" name="id" value="<%= paslon.id %>">
+                              <div class="form-group">
+                                <label>No. Urut</label>
+                                <input type="text" class="form-control" name="no_urut" value="<%= paslon.no_urut %>">
+                              </div>
+                              <div class="form-group">
+                                <label>Ketua</label>
+                                <select name="ketua_id" class="form-control">
+                                  <option value="<%= paslon.ketua_id %>"><%= paslon.Ketua.nama_lengkap %></option>
+                                  <% peserta.forEach(peser=> { %>
+                                    <option value="<%= peser.id %>">
+                                      <%= peser.nama_lengkap %>
+                                    </option>
+                                    <% }) %>
+                                </select>
+                              </div>
+                              <div class="form-group">
+                                <label>Wakil</label>
+                                <select name="wakil_id" class="form-control">
+                                  <option value="<%= paslon.wakil_id %>"><%= paslon.Wakil.nama_lengkap %></option>
+                                  <% peserta.forEach(peser=> { %>
+                                    <option value="<%= peser.id %>">
+                                      <%= peser.nama_lengkap %>
+                                    </option>
+                                    <% }) %>
+                                </select>
+                              </div>
+                              <div class="form-group">
+                                <label>Foto</label>
+                                <input type="text" class="form-control" name="image" value="<%= paslon.image %>">
+                              </div>
+                              <div class="form-group">
+                                <label>Video</label>
+                                <input type="text" class="form-control" name="video" value="<%= paslon.video %>">
+                              </div>
+                              <div class="form-group">
+                                <label>Visi</label>
+                                <textarea class="form-control" name="visi"
+                                  value="<%= paslon.visi %>"><%= paslon.visi %></textarea>
+                              </div>
+                              <div class="form-group">
+                                <label>Misi</label>
+                                <textarea class="form-control" name="misi"
+                                  value="<%= paslon.misi %>"><%= paslon.misi %></textarea>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                              <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+
+                    <form action="/paslon/hapus?_method=DELETE" method="POST" class="d-inline">
+                      <input type="hidden" name="id" value="<%= paslon.id %>">
+                      <button type="submit" class="badge badge-danger" style="border: none;">hapus</button>
+                    </form>
+                  </td>
+                </tr>
+                <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- /.container-fluid -->
+
+<!-- Modal -->
+<div class="modal fade" id="tambahPaslon" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Paslon</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="/paslon/tambah">
+        <div class="modal-body">
+          <div class="form-group">
+            <label>No. Urut</label>
+            <input type="text" class="form-control" name="no_urut" placeholder="Tambah no urut disini...">
+          </div>
+          <div class="form-group">
+            <label>Ketua</label>
+            <select name="ketua_id" class="form-control">
+              <option selected>Pilih</option>
+              <% peserta.forEach(peser=> { %>
+                <option value="<%= peser.id %>">
+                  <%= peser.nama_lengkap %>
+                </option>
+                <% }) %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Wakil</label>
+            <select name="wakil_id" class="form-control">
+              <option selected>Pilih</option>
+              <% peserta.forEach(peser=> { %>
+                <option value="<%= peser.id %>">
+                  <%= peser.nama_lengkap %>
+                </option>
+                <% }) %>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Foto</label>
+            <input type="text" class="form-control" name="image" placeholder="Tambah image disini...">
+          </div>
+          <div class="form-group">
+            <label>Video</label>
+            <input type="text" class="form-control" name="video" placeholder="Tambah video disini...">
+          </div>
+          <div class="form-group">
+            <label>Visi</label>
+            <textarea class="form-control" name="visi" placeholder="Tambah visi disini..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Misi</label>
+            <textarea class="form-control" name="misi" placeholder="Tambah misi disini..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

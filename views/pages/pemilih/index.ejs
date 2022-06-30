@@ -3,7 +3,7 @@
 
   <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahPeserta">Tambah data</button>
+      <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#tambahPemilih">Tambah data</button>
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -11,73 +11,73 @@
           <thead>
             <tr>
               <th>No</th>
-              <th>NIM</th>
+              <th>No Identitas</th>
               <th>Nama Lengkap</th>
-              <th>Kelas</th>
-              <th>Program Studi</th>
+              <th>Password</th>
+              <th>Status</th>
               <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
             <% let no=1; %>
-              <% data.forEach(peserta=> { %>
+              <% data.forEach(pemilih => { %>
                 <tr>
                   <td>
                     <%= no++ %>
                   </td>
                   <td>
-                    <%= peserta.nim %>
+                    <%= pemilih.no_identitas %>
                   </td>
                   <td>
-                    <%= peserta.nama_lengkap %>
+                    <%= pemilih.nama_lengkap %>
                   </td>
                   <td>
-                    <%= peserta.kelas %>
+                    <%= pemilih.password %>
                   </td>
                   <td>
-                    <%= peserta.Prodi.nama_prodi %>
+                    <%= pemilih.status === 1 ? 'Adminstrator' : 'Pengguna' %>
                   </td>
                   <td>
-                    <button type="button" style="border: none;" data-target="#editPeserta<%= peserta.id %>"
-                      data-toggle="modal" class="badge badge-warning">edit</button>
+                    <button type="button" style="border: none;" data-target="#editPemilih<%= pemilih.id %>" data-toggle="modal"
+                      class="badge badge-warning">edit</button>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="editPeserta<%= peserta.id %>" tabindex="-1" role="dialog">
+                    <div class="modal fade" id="editPemilih<%= pemilih.id %>" tabindex="-1" role="dialog">
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">
-                              <%= peserta.nama_lengkap %>
-                            </h5>
+                            <h5 class="modal-title" id="exampleModalLongTitle"><%= pemilih.nama_lengkap %></h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
-                          <form method="POST" action="/peserta/update?_method=PATCH">
+                          <form method="POST" action="/pemilih/update?_method=PATCH">
                             <div class="modal-body">
-                              <input type="hidden" name="id" value="<%= peserta.id %>">
+                              <input type="hidden" name="id" value="<%= pemilih.id %>">
                               <div class="form-group">
-                                <label>NIM</label>
-                                <input type="text" class="form-control" name="nim" value="<%= peserta.nim %>">
+                                <label>No. Identitas</label>
+                                <input type="text" class="form-control" name="no_identitas"
+                                  value="<%= pemilih.no_identitas %>">
                               </div>
                               <div class="form-group">
                                 <label>Nama Lengkap</label>
                                 <input type="text" class="form-control" name="nama_lengkap"
-                                  value="<%= peserta.nama_lengkap %>">
+                                  value="<%= pemilih.nama_lengkap %>">
                               </div>
                               <div class="form-group">
-                                <label>Kelas</label>
-                                <input type="text" class="form-control" name="kelas" value="<%= peserta.kelas %>">
+                                <label>Password</label>
+                                <input type="text" class="form-control" name="password"
+                                value="<%= pemilih.password %>">
                               </div>
                               <div class="form-group">
-                                <label>Prodi</label>
-                                <select name="prodi_id" class="form-control">
-                                  <option value="<%= peserta.prodi_id %>"><%= peserta.Prodi.nama_prodi %></option>
-                                  <% prodi.forEach(program=> { %>
-                                    <option value="<%= program.id %>">
-                                      <%= program.nama_prodi %>
-                                    </option>
-                                    <% }) %>
+                                <label>Status</label>
+                                <select name="status" class="form-control">
+                                  <option value="<%= pemilih.status %>"><%= pemilih.status === 1 ? 'Adminstrator' : 'Pengguna' %></option>
+                                  <% if(pemilih.status === 1) { %>
+                                    <option value="2">Pengguna</option>
+                                  <% } else { %>
+                                    <option value="1">Administrator</option>
+                                  <% } %>
                                 </select>
                               </div>
                             </div>
@@ -90,8 +90,8 @@
                       </div>
                     </div>
 
-                    <form action="/peserta/hapus?_method=DELETE" method="POST" class="d-inline">
-                      <input type="hidden" name="id" value="<%= peserta.id %>">
+                    <form action="/pemilih/hapus?_method=DELETE" method="POST" class="d-inline">
+                      <input type="hidden" name="id" value="<%= pemilih.id %>">
                       <button type="submit" class="badge badge-danger" style="border: none;">hapus</button>
                     </form>
                   </td>
@@ -107,38 +107,35 @@
 <!-- /.container-fluid -->
 
 <!-- Modal -->
-<div class="modal fade" id="tambahPeserta" tabindex="-1" role="dialog">
+<div class="modal fade" id="tambahPemilih" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Peserta</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Tambah Pemilih</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form method="POST" action="/peserta/tambah">
+      <form method="POST" action="/pemilih/tambah">
         <div class="modal-body">
           <div class="form-group">
-            <label>No. Induk Mahasiswa</label>
-            <input type="text" class="form-control" name="nim" placeholder="Tambah NIM disini...">
+            <label>No. Identitas</label>
+            <input type="text" class="form-control" name="no_identitas" placeholder="Tambah no. identitas disini...">
           </div>
           <div class="form-group">
             <label>Nama Lengkap</label>
             <input type="text" class="form-control" name="nama_lengkap" placeholder="Tambah nama lengkap disini...">
           </div>
           <div class="form-group">
-            <label>Kelas</label>
-            <input type="text" class="form-control" name="kelas" placeholder="Tambah kelas disini...">
+            <label>Password</label>
+            <input type="text" class="form-control" name="password" placeholder="Tambah password disini...">
           </div>
           <div class="form-group">
-            <label>Prodi</label>
-            <select name="prodi_id" class="form-control">
+            <label>Status</label>
+            <select name="status" class="form-control">
               <option selected>Pilih</option>
-              <% prodi.forEach(program=> { %>
-                <option value="<%= program.id %>">
-                  <%= program.nama_prodi %>
-                </option>
-                <% }) %>
+                <option value="1">Administrator</option>
+                <option value="2">Pengguna</option>
             </select>
           </div>
         </div>

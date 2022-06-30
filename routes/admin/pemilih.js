@@ -2,24 +2,16 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    Peserta,
-    Prodi
+    Pemilih
 } = require('../../models');
 
 router.get('/', async (req, res) => {
     try {
-        const prodi = await Prodi.findAll();
-        const peserta = await Peserta.findAll({
-            include: [{
-                model: Prodi,
-                as: 'Prodi'
-            }],
-        });
-        res.render('pages/peserta/index',{
+        const pemilih = await Pemilih.findAll();
+        res.render('pages/pemilih/index',{
             layout: 'layouts/dashboard',
-            title: 'Peserta',
-            data: peserta,
-            prodi: prodi,
+            title: 'Pemilih',
+            data: pemilih,
             url: req.originalUrl
         });
     } catch (error) {
@@ -29,7 +21,7 @@ router.get('/', async (req, res) => {
 
 router.post('/tambah', async(req, res) => {
     try {
-        await Peserta.create(req.body);
+        await Pemilih.create(req.body);
         res.redirect('back');
     } catch (error) {
         console.log(error);
@@ -38,7 +30,7 @@ router.post('/tambah', async(req, res) => {
 
 router.patch('/update', async(req, res) => {
     try {
-        await Peserta.update(req.body, {
+        await Pemilih.update(req.body, {
             where: {
                 id: req.body.id
             }
@@ -51,12 +43,12 @@ router.patch('/update', async(req, res) => {
 
 router.delete('/hapus', async(req, res) => {
     try {
-        await Peserta.destroy({
+        await Pemilih.destroy({
             where: {
                 id:req.body.id
             }
         });
-        res.redirect('back');s
+        res.redirect('back');
     } catch (error) {
         console.log(error);
     }
