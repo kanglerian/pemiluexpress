@@ -2,16 +2,15 @@ const express = require('express');
 const router = express.Router();
 
 const {
-    Pemilihan, Pemilih, Paslon, Peserta
+    Pemilihan, Paslon, Peserta
 } = require('../../models');
 
 router.get('/', async (req, res) => {
     try {
-        const pemilihan = await Pemilihan.findAll({
-            include: [
-                {model: Pemilih, as: 'Pemilih'},
-                {model: Paslon, as: 'Paslon' },
-            ]
+        const jumlah = await Pemilihan.findAll({
+            where: {
+                paslon_id: 7
+            }
         });
         const paslon = await Paslon.findAll({
             include: [
@@ -23,7 +22,7 @@ router.get('/', async (req, res) => {
             layout: 'layouts/dashboard',
             title: 'Dashboard',
             data: paslon,
-            jumlah: pemilihan,
+            jumlah: jumlah,
             url: req.originalUrl
         });
     } catch (error) {
