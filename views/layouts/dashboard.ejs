@@ -45,8 +45,8 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
+            <li class="nav-item <%= url === '/dashboard' ? 'active' : '' %>">
+                <a class="nav-link" href="/dashboard">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
@@ -67,8 +67,8 @@
             </li>
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
+            <li class="nav-item <%= url === '/pemilihan' ? 'active' : '' %>">
+                <a class="nav-link" href="/pemilihan">
                     <i class="fas fa-vote-yea"></i>
                     <span>Voting</span></a>
             </li>
