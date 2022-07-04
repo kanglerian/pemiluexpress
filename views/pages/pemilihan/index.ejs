@@ -17,7 +17,7 @@
           </div>
           <div class="card-footer">
             <form action="/pemilihan/tambah" method="POST" class="d-inline">
-              <input type="hidden" name="pemilih_id" value="1">
+              <input type="hidden" name="pemilih_id" value="<%= user.no_identitas %>">
               <input type="hidden" name="paslon_id" value="<%= paslon.id %>">
               <button type="submit" class="btn btn-primary btn-block">Pilih</button>
             </form>

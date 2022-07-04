@@ -22,6 +22,9 @@ const paslonDashboardRouter = require('./routes/admin/paslon');
 const pemilihanDashboardRouter = require('./routes/admin/pemilihan');
 const dashboardDashboardRouter = require('./routes/admin/dashboard');
 
+const session = require('express-session');
+const auth = require('./middlewares/auth.js');
+
 const app = express();
 
 app.use(cors());
@@ -36,8 +39,9 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+app.use(cookieParser('secret'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'secret' }))
 
 app.use('/', indexRouter);
 app.use('/api/prodi', prodiRouter);
@@ -47,12 +51,12 @@ app.use('/api/pemilih', pemilihRouter);
 app.use('/api/pemilihan', pemilihanRouter);
 
 
-app.use('/prodi', prodiDashboardRouter);
-app.use('/peserta', pesertaDashboardRouter);
-app.use('/pemilih', pemilihDashboardRouter);
-app.use('/paslon', paslonDashboardRouter);
-app.use('/pemilihan', pemilihanDashboardRouter);
-app.use('/dashboard', dashboardDashboardRouter);
+app.use('/prodi', auth.checkLogin, auth.checkStatus, prodiDashboardRouter);
+app.use('/peserta', auth.checkLogin, auth.checkStatus, pesertaDashboardRouter);
+app.use('/pemilih', auth.checkLogin, auth.checkStatus, pemilihDashboardRouter);
+app.use('/paslon', auth.checkLogin, paslonDashboardRouter);
+app.use('/pemilihan', auth.checkLogin, pemilihanDashboardRouter);
+app.use('/dashboard', auth.checkLogin, auth.checkStatus, dashboardDashboardRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

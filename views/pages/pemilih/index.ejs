@@ -38,11 +38,11 @@
                     <%= pemilih.status === 1 ? 'Adminstrator' : 'Pengguna' %>
                   </td>
                   <td>
-                    <button type="button" style="border: none;" data-target="#editPemilih<%= pemilih.id %>" data-toggle="modal"
+                    <button type="button" style="border: none;" data-target="#editPemilih<%= pemilih.no_identitas %>" data-toggle="modal"
                       class="badge badge-warning">edit</button>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="editPemilih<%= pemilih.id %>" tabindex="-1" role="dialog">
+                    <div class="modal fade" id="editPemilih<%= pemilih.no_identitas %>" tabindex="-1" role="dialog">
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -53,12 +53,7 @@
                           </div>
                           <form method="POST" action="/pemilih/update?_method=PATCH">
                             <div class="modal-body">
-                              <input type="hidden" name="id" value="<%= pemilih.id %>">
-                              <div class="form-group">
-                                <label>No. Identitas</label>
-                                <input type="text" class="form-control" name="no_identitas"
-                                  value="<%= pemilih.no_identitas %>">
-                              </div>
+                              <input type="hidden" name="no_identitas" value="<%= pemilih.no_identitas %>">
                               <div class="form-group">
                                 <label>Nama Lengkap</label>
                                 <input type="text" class="form-control" name="nama_lengkap"
@@ -72,11 +67,11 @@
                               <div class="form-group">
                                 <label>Status</label>
                                 <select name="status" class="form-control">
-                                  <option value="<%= pemilih.status %>"><%= pemilih.status === 1 ? 'Adminstrator' : 'Pengguna' %></option>
-                                  <% if(pemilih.status === 1) { %>
-                                    <option value="2">Pengguna</option>
+                                  <option value="<%= pemilih.status %>"><%= pemilih.status === 0 ? 'Adminstrator' : 'Pengguna' %></option>
+                                  <% if(pemilih.status === 0) { %>
+                                    <option value="1">Pengguna</option>
                                   <% } else { %>
-                                    <option value="1">Administrator</option>
+                                    <option value="0">Administrator</option>
                                   <% } %>
                                 </select>
                               </div>
@@ -91,7 +86,7 @@
                     </div>
 
                     <form action="/pemilih/hapus?_method=DELETE" method="POST" class="d-inline">
-                      <input type="hidden" name="id" value="<%= pemilih.id %>">
+                      <input type="hidden" name="no_identitas" value="<%= pemilih.no_identitas %>">
                       <button type="submit" class="badge badge-danger" style="border: none;">hapus</button>
                     </form>
                   </td>
@@ -134,8 +129,8 @@
             <label>Status</label>
             <select name="status" class="form-control">
               <option selected>Pilih</option>
-                <option value="1">Administrator</option>
-                <option value="2">Pengguna</option>
+                <option value="0">Administrator</option>
+                <option value="1">Pengguna</option>
             </select>
           </div>
         </div>

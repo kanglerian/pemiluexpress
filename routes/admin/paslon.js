@@ -6,6 +6,7 @@ const {
 } = require('../../models');
 
 router.get('/', async(req, res) => {
+    const session_store = req.session;
     try {
         const paslon = await Paslon.findAll({
             include: [
@@ -24,7 +25,8 @@ router.get('/', async(req, res) => {
             title: 'Paslon',
             data: paslon,
             peserta: peserta,
-            url: req.originalUrl
+            url: req.originalUrl,
+            user: session_store
         });
     } catch (error) {
         console.log(error);

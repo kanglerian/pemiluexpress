@@ -1,18 +1,21 @@
 const express = require('express');
 const router = express.Router();
 
+
 const {
   Prodi
 } = require('../../models');
 
 router.get('/', async (req, res) => {
+  const session_store = req.session;
   try {
     const prodi = await Prodi.findAll();
     res.render('pages/prodi/index',{
       layout: 'layouts/dashboard',
       title: 'Program Studi',
       data: prodi,
-      url: req.originalUrl
+      url: req.originalUrl,
+      user: session_store
     });
   } catch (error) {
     console.log(error);

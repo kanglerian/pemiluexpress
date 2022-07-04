@@ -70,7 +70,7 @@
                         </div>
                       </div>
                     </div>
-
+                    <% if(user.status == 0) { %>
                     <button type="button" data-toggle="modal" data-target="#edit<%= paslon.id %>"
                       class="badge badge-warning" style="border: none;">edit</button>
 
@@ -145,6 +145,7 @@
                       <input type="hidden" name="id" value="<%= paslon.id %>">
                       <button type="submit" class="badge badge-danger" style="border: none;">hapus</button>
                     </form>
+                    <% } %>
                   </td>
                 </tr>
                 <% }) %>

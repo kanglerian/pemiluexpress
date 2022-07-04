@@ -1,14 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
     const Pemilih = sequelize.define('Pemilih',{
-        id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            autoIncrement: true,
-            allowNull: false,
-        },
         no_identitas: {
             type: DataTypes.STRING,
-            unique: true,
+            primaryKey: true,
             allowNull: false,
         },
         nama_lengkap: {
@@ -20,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
         },
         status: {
-            type: DataTypes.STRING,
+            type: DataTypes.BOOLEAN,
             allowNull: false,
         },
         createdAt: {

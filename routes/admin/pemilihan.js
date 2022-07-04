@@ -6,6 +6,7 @@ const {
 } = require('../../models');
 
 router.get('/', async (req, res) => {
+    const session_store = req.session;
     try {
         const paslon = await Paslon.findAll({
             include: [
@@ -17,7 +18,8 @@ router.get('/', async (req, res) => {
             layout: 'layouts/dashboard',
             title: 'Pemilihan',
             data: paslon,
-            url: req.originalUrl
+            url: req.originalUrl,
+            user: session_store
         });
     } catch (error) {
         console.log(error);

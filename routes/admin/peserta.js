@@ -7,6 +7,7 @@ const {
 } = require('../../models');
 
 router.get('/', async (req, res) => {
+    const session_store = req.session;
     try {
         const prodi = await Prodi.findAll();
         const peserta = await Peserta.findAll({
@@ -20,7 +21,8 @@ router.get('/', async (req, res) => {
             title: 'Peserta',
             data: peserta,
             prodi: prodi,
-            url: req.originalUrl
+            url: req.originalUrl,
+            user: session_store
         });
     } catch (error) {
         console.log(error);
