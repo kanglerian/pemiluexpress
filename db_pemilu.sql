@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jul 03, 2022 at 03:51 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.0.19
+-- Waktu pembuatan: 04 Jul 2022 pada 08.26
+-- Versi server: 10.4.18-MariaDB
+-- Versi PHP: 7.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `paslon`
+-- Struktur dari tabel `paslon`
 --
 
 CREATE TABLE `paslon` (
@@ -41,7 +41,7 @@ CREATE TABLE `paslon` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `paslon`
+-- Dumping data untuk tabel `paslon`
 --
 
 INSERT INTO `paslon` (`id`, `no_urut`, `ketua_id`, `wakil_id`, `image`, `video`, `visi`, `misi`, `created_at`, `updated_at`) VALUES
@@ -52,7 +52,7 @@ INSERT INTO `paslon` (`id`, `no_urut`, `ketua_id`, `wakil_id`, `image`, `video`,
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pemilih`
+-- Struktur dari tabel `pemilih`
 --
 
 CREATE TABLE `pemilih` (
@@ -66,7 +66,7 @@ CREATE TABLE `pemilih` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `pemilih`
+-- Dumping data untuk tabel `pemilih`
 --
 
 INSERT INTO `pemilih` (`id`, `no_identitas`, `nama_lengkap`, `password`, `status`, `created_at`, `updated_at`) VALUES
@@ -76,7 +76,7 @@ INSERT INTO `pemilih` (`id`, `no_identitas`, `nama_lengkap`, `password`, `status
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pemilihan`
+-- Struktur dari tabel `pemilihan`
 --
 
 CREATE TABLE `pemilihan` (
@@ -88,21 +88,16 @@ CREATE TABLE `pemilihan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `pemilihan`
+-- Dumping data untuk tabel `pemilihan`
 --
 
 INSERT INTO `pemilihan` (`id`, `pemilih_id`, `paslon_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, '2022-07-03', '2022-07-03'),
-(2, 1, 1, '2022-07-03', '2022-07-03'),
-(3, 1, 1, '2022-07-03', '2022-07-03'),
-(4, 1, 2, '2022-07-03', '2022-07-03'),
-(5, 1, 2, '2022-07-03', '2022-07-03'),
-(6, 1, 3, '2022-07-03', '2022-07-03');
+(13, 1, 2, '2022-07-04', '2022-07-04');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `peserta`
+-- Struktur dari tabel `peserta`
 --
 
 CREATE TABLE `peserta` (
@@ -116,7 +111,7 @@ CREATE TABLE `peserta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `peserta`
+-- Dumping data untuk tabel `peserta`
 --
 
 INSERT INTO `peserta` (`id`, `nim`, `nama_lengkap`, `kelas`, `prodi_id`, `created_at`, `updated_at`) VALUES
@@ -130,7 +125,7 @@ INSERT INTO `peserta` (`id`, `nim`, `nama_lengkap`, `kelas`, `prodi_id`, `create
 -- --------------------------------------------------------
 
 --
--- Table structure for table `prodi`
+-- Struktur dari tabel `prodi`
 --
 
 CREATE TABLE `prodi` (
@@ -143,7 +138,7 @@ CREATE TABLE `prodi` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `prodi`
+-- Dumping data untuk tabel `prodi`
 --
 
 INSERT INTO `prodi` (`id`, `nama_prodi`, `kaprodi`, `fakultas`, `created_at`, `updated_at`) VALUES
@@ -152,12 +147,45 @@ INSERT INTO `prodi` (`id`, `nama_prodi`, `kaprodi`, `fakultas`, `created_at`, `u
 (3, 'Manajemen Keuangan Perbankan', 'Adzka Rosa Sanjayana, M.Ak', 'Fakultas Ekonomi', '2022-07-03', '2022-07-03'),
 (4, 'Manajemen Pemasaran', 'Ernawati, M.Pd., MM', 'Fakultas Ekonomi', '2022-07-03', '2022-07-03');
 
+-- --------------------------------------------------------
+
+--
+-- Stand-in struktur untuk tampilan `view_pemilihan`
+-- (Lihat di bawah untuk tampilan aktual)
+--
+CREATE TABLE `view_pemilihan` (
+`id` int(11)
+,`no_urut` int(11)
+,`ketua_id` int(11)
+,`wakil_id` int(11)
+,`image` text
+,`video` text
+,`visi` text
+,`misi` text
+,`created_at` date
+,`updated_at` date
+,`nama_ketua` varchar(255)
+,`kelas_ketua` varchar(255)
+,`nama_wakil` varchar(255)
+,`kelas_wakil` varchar(255)
+,`jumlah` bigint(21)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur untuk view `view_pemilihan`
+--
+DROP TABLE IF EXISTS `view_pemilihan`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `view_pemilihan`  AS SELECT `paslon`.`id` AS `id`, `paslon`.`no_urut` AS `no_urut`, `paslon`.`ketua_id` AS `ketua_id`, `paslon`.`wakil_id` AS `wakil_id`, `paslon`.`image` AS `image`, `paslon`.`video` AS `video`, `paslon`.`visi` AS `visi`, `paslon`.`misi` AS `misi`, `paslon`.`created_at` AS `created_at`, `paslon`.`updated_at` AS `updated_at`, `ketua`.`nama_lengkap` AS `nama_ketua`, `ketua`.`kelas` AS `kelas_ketua`, `wakil`.`nama_lengkap` AS `nama_wakil`, `wakil`.`kelas` AS `kelas_wakil`, count(`pemilihan`.`paslon_id`) AS `jumlah` FROM (`pemilihan` left join ((`paslon` join `peserta` `ketua` on(`ketua`.`id` = `paslon`.`ketua_id`)) join `peserta` `wakil` on(`wakil`.`id` = `paslon`.`wakil_id`)) on(`pemilihan`.`paslon_id` = `paslon`.`id`)) GROUP BY `pemilihan`.`paslon_id` ;
+
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `paslon`
+-- Indeks untuk tabel `paslon`
 --
 ALTER TABLE `paslon`
   ADD PRIMARY KEY (`id`),
@@ -165,14 +193,14 @@ ALTER TABLE `paslon`
   ADD UNIQUE KEY `wakil_id` (`wakil_id`);
 
 --
--- Indexes for table `pemilih`
+-- Indeks untuk tabel `pemilih`
 --
 ALTER TABLE `pemilih`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `no_identitas` (`no_identitas`);
 
 --
--- Indexes for table `pemilihan`
+-- Indeks untuk tabel `pemilihan`
 --
 ALTER TABLE `pemilihan`
   ADD PRIMARY KEY (`id`),
@@ -180,7 +208,7 @@ ALTER TABLE `pemilihan`
   ADD KEY `paslon_id` (`paslon_id`);
 
 --
--- Indexes for table `peserta`
+-- Indeks untuk tabel `peserta`
 --
 ALTER TABLE `peserta`
   ADD PRIMARY KEY (`id`),
@@ -188,66 +216,66 @@ ALTER TABLE `peserta`
   ADD KEY `prodi_id` (`prodi_id`);
 
 --
--- Indexes for table `prodi`
+-- Indeks untuk tabel `prodi`
 --
 ALTER TABLE `prodi`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `nama_prodi` (`nama_prodi`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `paslon`
+-- AUTO_INCREMENT untuk tabel `paslon`
 --
 ALTER TABLE `paslon`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `pemilih`
+-- AUTO_INCREMENT untuk tabel `pemilih`
 --
 ALTER TABLE `pemilih`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `pemilihan`
+-- AUTO_INCREMENT untuk tabel `pemilihan`
 --
 ALTER TABLE `pemilihan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
--- AUTO_INCREMENT for table `peserta`
+-- AUTO_INCREMENT untuk tabel `peserta`
 --
 ALTER TABLE `peserta`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `prodi`
+-- AUTO_INCREMENT untuk tabel `prodi`
 --
 ALTER TABLE `prodi`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `paslon`
+-- Ketidakleluasaan untuk tabel `paslon`
 --
 ALTER TABLE `paslon`
   ADD CONSTRAINT `paslon_ibfk_1` FOREIGN KEY (`ketua_id`) REFERENCES `peserta` (`id`),
   ADD CONSTRAINT `paslon_ibfk_2` FOREIGN KEY (`wakil_id`) REFERENCES `peserta` (`id`);
 
 --
--- Constraints for table `pemilihan`
+-- Ketidakleluasaan untuk tabel `pemilihan`
 --
 ALTER TABLE `pemilihan`
   ADD CONSTRAINT `pemilihan_ibfk_1` FOREIGN KEY (`pemilih_id`) REFERENCES `pemilih` (`id`),
   ADD CONSTRAINT `pemilihan_ibfk_2` FOREIGN KEY (`paslon_id`) REFERENCES `paslon` (`id`);
 
 --
--- Constraints for table `peserta`
+-- Ketidakleluasaan untuk tabel `peserta`
 --
 ALTER TABLE `peserta`
   ADD CONSTRAINT `peserta_ibfk_1` FOREIGN KEY (`prodi_id`) REFERENCES `prodi` (`id`);
