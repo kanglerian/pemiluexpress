@@ -2,29 +2,33 @@
 <div class="container-fluid">
 
   <div class="row">
-
-    <% data.forEach(paslon => { %>
-      <div class="col-md-4">
-        <div class="card shadow mb-4">
-          <div class="card-header text-center">
-            <h5><span class="badge badge-danger">No. urut <%= paslon.no_urut %></span></h5>
-          </div>
-          <div class="card-body">
-            <img src="<%= paslon.image %>" class="card-img-top">
-            <div class="text-center mt-3">
-              <h5 class="font-weight-bold"><%= paslon.Ketua.nama_lengkap %> & <%= paslon.Wakil.nama_lengkap %></h5>
-              <span class="font-weight-reguler"><%= paslon.Ketua.kelas %> & <%= paslon.Wakil.kelas %></span>
+    <% if(data.length > 0) { %>
+      <% data.forEach(paslon => { %>
+        <div class="col-md-4">
+          <div class="card shadow mb-4">
+            <div class="card-header text-center">
+              <h5><span class="badge badge-danger">No. urut <%= paslon.no_urut %></span></h5>
+            </div>
+            <div class="card-body">
+              <img src="<%= paslon.image %>" class="card-img-top">
+              <div class="text-center mt-3">
+                <h5 class="font-weight-bold"><%= paslon.nama_ketua %> & <%= paslon.nama_wakil %></h5>
+                <span class="font-weight-reguler"><%= paslon.kelas_ketua %> & <%= paslon.kelas_wakil %></span>
+              </div>
+            </div>
+            <div class="card-footer">
+                <button type="button" class="btn btn-primary btn-block">
+                  <%= paslon.jumlah %>
+                </button>
             </div>
           </div>
-          <div class="card-footer">
-              <button type="button" class="btn btn-primary btn-block">
-                
-              </button>
-          </div>
         </div>
-      </div>
-      <% }) %>
+        <% }) %>
+      <% } else { %>
+        <div class="alert alert-danger" role="alert">
+          Belum ada pemilihan.
+        </div>
+      <% } %>
   </div>
-<%= jumlah.length %>
 </div>
 <!-- /.container-fluid -->

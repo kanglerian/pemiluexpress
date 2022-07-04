@@ -29,7 +29,7 @@ router.post('/tambah', async (req, res) => {
         await Pemilihan.create(req.body);
         res.redirect('back');
     } catch (error) {
-        console.log(error);
+        res.send("Anda sudah memilih!");
     }
 });
 
