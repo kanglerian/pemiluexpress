@@ -38,7 +38,7 @@ router.post('/tambah', async(req, res) => {
         await Paslon.create(req.body);
         res.redirect('back');
     } catch (error) {
-        console.log(error);
+        res.send("Paslon tidak boleh double job!");
     }
 });
 

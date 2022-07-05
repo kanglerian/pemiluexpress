@@ -141,10 +141,12 @@
                       </div>
                     </div>
 
-                    <form action="/paslon/hapus?_method=DELETE" method="POST" class="d-inline">
+                    <form action="/paslon/hapus?_method=DELETE" id="paslonHapus<%= paslon.id %>" method="POST" class="d-inline">
                       <input type="hidden" name="id" value="<%= paslon.id %>">
-                      <button type="submit" class="badge badge-danger" style="border: none;">hapus</button>
                     </form>
+                    <button type="button" onclick="hapus('<%= paslon.id %>');"
+                      class="badge badge-danger border-0">hapus</button>
+
                     <% } %>
                   </td>
                 </tr>
@@ -221,3 +223,27 @@
     </div>
   </div>
 </div>
+
+<script>
+  const hapus = (data) => {
+    swal({
+      title: `Apakah yakin?`,
+      text: "Jika paslon ini dihapus, kamu tidak bisa mengembalikannya.",
+      icon: "warning",
+      buttons: ["Batal", "Lanjutkan!"],
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          document.getElementById(`paslonHapus${data}`).submit();
+          swal("Paslon telah dihapus!", {
+            icon: "success"
+          });
+        } else {
+          swal("Paslon tidak jadi dihapus.", {
+            button: "Tutup"
+          });
+        }
+      });
+  }
+</script>

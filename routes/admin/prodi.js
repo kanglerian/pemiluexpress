@@ -53,7 +53,7 @@ router.delete('/hapus', async (req, res) => {
     });
     res.redirect('back');
   } catch (error) {
-    console.log(error);
+    res.send(error);
   }
 });
 

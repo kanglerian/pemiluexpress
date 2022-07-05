@@ -75,10 +75,12 @@
                       </div>
                     </div>
 
-                    <form action="/prodi/hapus?_method=DELETE" method="POST" class="d-inline">
+                    <form action="/prodi/hapus?_method=DELETE" id="prodiHapus<%= prodi.id %>" method="POST" class="d-inline">
                       <input type="hidden" name="id" value="<%= prodi.id %>">
-                      <button type="submit" class="badge badge-danger" style="border: none;">hapus</button>
                     </form>
+                    <button type="button" onclick="hapus('<%= prodi.id %>');"
+                      class="badge badge-danger border-0">hapus</button>
+                    
                   </td>
                 </tr>
                 <% }) %>
@@ -124,3 +126,27 @@
     </div>
   </div>
 </div>
+
+<script>
+  const hapus = (data) => {
+    swal({
+      title: `Apakah yakin?`,
+      text: "Jika Program studi ini dihapus, kamu tidak bisa mengembalikannya.",
+      icon: "warning",
+      buttons: ["Batal", "Lanjutkan!"],
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          document.getElementById(`prodiHapus${data}`).submit();
+          swal("Program studi telah dihapus!", {
+            icon: "success"
+          });
+        } else {
+          swal("Program studi tidak jadi dihapus.", {
+            button: "Tutup"
+          });
+        }
+      });
+  }
+</script>

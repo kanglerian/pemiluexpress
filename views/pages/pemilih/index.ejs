@@ -85,10 +85,12 @@
                       </div>
                     </div>
 
-                    <form action="/pemilih/hapus?_method=DELETE" method="POST" class="d-inline">
+                    <form action="/pemilih/hapus?_method=DELETE" id="pemilihHapus<%= pemilih.no_identitas %>" method="POST" class="d-inline">
                       <input type="hidden" name="no_identitas" value="<%= pemilih.no_identitas %>">
-                      <button type="submit" class="badge badge-danger" style="border: none;">hapus</button>
                     </form>
+                    <button type="button" onclick="hapus('<%= pemilih.no_identitas %>');"
+                      class="badge badge-danger border-0">hapus</button>
+
                   </td>
                 </tr>
                 <% }) %>
@@ -142,3 +144,27 @@
     </div>
   </div>
 </div>
+
+<script>
+  const hapus = (data) => {
+    swal({
+      title: `Apakah yakin?`,
+      text: "Jika pemilih ini dihapus, kamu tidak bisa mengembalikannya.",
+      icon: "warning",
+      buttons: ["Batal", "Lanjutkan!"],
+      dangerMode: true,
+    })
+      .then((willDelete) => {
+        if (willDelete) {
+          document.getElementById(`pemilihHapus${data}`).submit();
+          swal("Pemilih telah dihapus!", {
+            icon: "success"
+          });
+        } else {
+          swal("Pemilih tidak jadi dihapus.", {
+            button: "Tutup"
+          });
+        }
+      });
+  }
+</script>
