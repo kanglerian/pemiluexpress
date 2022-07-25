@@ -5,6 +5,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
+const flash = require('connect-flash');
 const expressLayouts = require('express-ejs-layouts');
 const methodOverride = require('method-override');
 
@@ -31,6 +32,7 @@ app.use(cors());
 app.use(expressLayouts);
 
 app.use(methodOverride('_method'));
+app.use(flash());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -52,7 +54,7 @@ app.use('/api/pemilihan', pemilihanRouter);
 
 
 app.use('/prodi', auth.checkLogin, auth.checkStatus, prodiDashboardRouter);
-app.use('/peserta', auth.checkLogin, auth.checkStatus, pesertaDashboardRouter);
+app.use('/peserta', pesertaDashboardRouter);
 app.use('/pemilih', auth.checkLogin, auth.checkStatus, pemilihDashboardRouter);
 app.use('/paslon', auth.checkLogin, paslonDashboardRouter);
 app.use('/pemilihan', auth.checkLogin, pemilihanDashboardRouter);
