@@ -51,7 +51,9 @@ router.delete('/hapus', async (req, res) => {
         id: req.body.id
       }
     });
-    res.redirect('back');
+    setTimeout(() => {
+        res.redirect('back');
+    }, 1000);
   } catch (error) {
     res.send(error);
   }

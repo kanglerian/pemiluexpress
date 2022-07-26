@@ -32,37 +32,19 @@ router.get('/', async (req, res) => {
     }
 });
 
-router.post('/tambah', [
-    body('nim').custom( async (value) => {
-        const duplikat = await Peserta.findOne({ nim: value });
-        if (duplikat) {
-            throw new Error(`NIM telah terdaftar!`);
+router.post('/tambah', async (req, res) => {
+    const validation = await Peserta.findOne({
+        where: {
+            nim: req.body.nim
         }
-        return true;
-    }),
-], async (req, res) => {
-    const errors = validationResult(req);
-    const session_store = req.session;
-    if(!errors.isEmpty()){
-        const prodi = await Prodi.findAll();
-        const peserta = await Peserta.findAll({
-            include: [{
-                model: Prodi,
-                as: 'Prodi'
-            }],
-        });
-        res.render('pages/peserta/index', {
-        layout: 'layouts/dashboard',
-        title: 'Peserta',
-        data: peserta,
-        prodi: prodi,
-        url: req.originalUrl,
-        user: session_store,
-        errors: errors.array(),
     });
+    if(validation !== null){
+        req.flash('msg','Gagal, NIM sudah terdaftar.');
+        req.flash('status','danger');
+        res.redirect('back');
     }else{
         await Peserta.create(req.body);
-        req.flash('msg','Data berhasil ditambahkan');
+        req.flash('msg','Data berhasil ditambahkan.');
         req.flash('status','success');
         res.redirect('back');
     }
@@ -88,7 +70,9 @@ router.delete('/hapus', async (req, res) => {
                 id: req.body.id
             }
         });
-        res.redirect('back'); s
+        setTimeout(() => {
+            res.redirect('back');
+        }, 1000);
     } catch (error) {
         console.log(error);
     }

@@ -54,7 +54,7 @@ app.use('/api/pemilihan', pemilihanRouter);
 
 
 app.use('/prodi', auth.checkLogin, auth.checkStatus, prodiDashboardRouter);
-app.use('/peserta', pesertaDashboardRouter);
+app.use('/peserta', auth.checkLogin, auth.checkStatus, pesertaDashboardRouter);
 app.use('/pemilih', auth.checkLogin, auth.checkStatus, pemilihDashboardRouter);
 app.use('/paslon', auth.checkLogin, paslonDashboardRouter);
 app.use('/pemilihan', auth.checkLogin, pemilihanDashboardRouter);

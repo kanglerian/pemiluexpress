@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true,
         },
         status: {
-            type: DataTypes.BOOLEAN,
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         createdAt: {

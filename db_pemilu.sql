@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Waktu pembuatan: 25 Jul 2022 pada 14.50
+-- Waktu pembuatan: 26 Jul 2022 pada 06.49
 -- Versi server: 10.4.18-MariaDB
 -- Versi PHP: 7.4.16
 
@@ -36,6 +36,7 @@ CREATE TABLE `paslon` (
   `video` text DEFAULT NULL,
   `visi` text DEFAULT NULL,
   `misi` text DEFAULT NULL,
+  `status` tinyint(4) NOT NULL,
   `created_at` date DEFAULT NULL,
   `updated_at` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -44,10 +45,10 @@ CREATE TABLE `paslon` (
 -- Dumping data untuk tabel `paslon`
 --
 
-INSERT INTO `paslon` (`id`, `no_urut`, `ketua_id`, `wakil_id`, `image`, `video`, `visi`, `misi`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 2, 'http://kpu.politekniklp3i-tasikmalaya.ac.id/assets/img/1655259857683.JPG', '', 'Menjadikan BEM Politeknik LP3I Kampus Tasikmalaya yang memiliki pengaruh Social, Budaya dan Pendidikan di tingkat Kota Tasikmalaya dan Priangan Timur dengan berlandaskan iman, takwa dan budi luhur', 'Menjadikan BEM Politeknik LP3I Kampus Tasikmalaya yang memiliki pengaruh Social, Budaya dan Pendidikan di tingkat Kota Tasikmalaya dan Priangan Timur dengan berlandaskan iman, takwa dan budi luhur', '2022-07-03', '2022-07-03'),
-(2, 2, 3, 4, 'http://kpu.politekniklp3i-tasikmalaya.ac.id/assets/img/1655259879451.JPG', '', 'Mencipatakan BEM yang berperan aktif dalam pengembangan minat dan bakat bagi seluruh mahasiswa\r\n', 'Mencipatakan BEM yang berperan aktif dalam pengembangan minat dan bakat bagi seluruh mahasiswa\r\n', '2022-07-03', '2022-07-03'),
-(3, 3, 5, 6, 'http://kpu.politekniklp3i-tasikmalaya.ac.id/assets/img/1655260054469.JPG', '', 'Mewujudkan BEM sebagai wadah sekaligus penggerak dan pelaksana aspirasi mahasiswa yang relevan bagi mahasiswa dan kampus, Juga menciptakan BEM sebagai organisasi yang aktif diinternal maupun dieksternal.\r\n', 'Mewujudkan BEM sebagai wadah sekaligus penggerak dan pelaksana aspirasi mahasiswa yang relevan bagi mahasiswa dan kampus, Juga menciptakan BEM sebagai organisasi yang aktif diinternal maupun dieksternal.\r\n', '2022-07-03', '2022-07-03');
+INSERT INTO `paslon` (`id`, `no_urut`, `ketua_id`, `wakil_id`, `image`, `video`, `visi`, `misi`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 2, 'http://kpu.politekniklp3i-tasikmalaya.ac.id/assets/img/1655259857683.JPG', '', 'Menjadikan BEM Politeknik LP3I Kampus Tasikmalaya yang memiliki pengaruh Social, Budaya dan Pendidikan di tingkat Kota Tasikmalaya dan Priangan Timur dengan berlandaskan iman, takwa dan budi luhur', 'Menjadikan BEM Politeknik LP3I Kampus Tasikmalaya yang memiliki pengaruh Social, Budaya dan Pendidikan di tingkat Kota Tasikmalaya dan Priangan Timur dengan berlandaskan iman, takwa dan budi luhur', 0, '2022-07-03', '2022-07-26'),
+(2, 2, 3, 4, 'http://kpu.politekniklp3i-tasikmalaya.ac.id/assets/img/1655259879451.JPG', '', 'Menciptakan BEM yang berperan aktif dalam pengembangan minat dan bakat bagi seluruh mahasiswa\r\n', 'Menciptakan BEM yang berperan aktif dalam pengembangan minat dan bakat bagi seluruh mahasiswa\r\n', 0, '2022-07-03', '2022-07-26'),
+(3, 3, 5, 6, 'http://kpu.politekniklp3i-tasikmalaya.ac.id/assets/img/1655260054469.JPG', '', 'Mewujudkan BEM sebagai wadah sekaligus penggerak dan pelaksana aspirasi mahasiswa yang relevan bagi mahasiswa dan kampus, Juga menciptakan BEM sebagai organisasi yang aktif diinternal maupun dieksternal.\r\n', 'Mewujudkan BEM sebagai wadah sekaligus penggerak dan pelaksana aspirasi mahasiswa yang relevan bagi mahasiswa dan kampus, Juga menciptakan BEM sebagai organisasi yang aktif diinternal maupun dieksternal.\r\n', 0, '2022-07-03', '2022-07-26');
 
 -- --------------------------------------------------------
 
@@ -91,7 +92,8 @@ CREATE TABLE `pemilihan` (
 --
 
 INSERT INTO `pemilihan` (`id`, `pemilih_id`, `paslon_id`, `created_at`, `updated_at`) VALUES
-(23, '201702103', 2, '2022-07-04', '2022-07-04');
+(24, '201702103', 1, '2022-07-26', '2022-07-26'),
+(28, '201702102', 2, '2022-07-26', '2022-07-26');
 
 -- --------------------------------------------------------
 
@@ -118,8 +120,8 @@ INSERT INTO `peserta` (`id`, `nim`, `nama_lengkap`, `kelas`, `prodi_id`, `create
 (2, '20220102', 'Agus Setiawan', 'MKP02B', 3, '2022-07-03', '2022-07-03'),
 (3, '20220103', 'Tria Monita Putri', 'MKP02A', 3, '2022-07-03', '2022-07-03'),
 (4, '20220104', 'Rahma Sabha Fikriyati Fauzi', 'MP02', 4, '2022-07-03', '2022-07-03'),
-(5, '20220105', 'Firada Tahta Winata', 'MI21A', 2, '2022-07-03', '2022-07-03'),
-(6, '20220106', 'Asep Yoga Firmansyah', 'MI21A', 2, '2022-07-03', '2022-07-03');
+(5, '20220105', 'Firada Tahta Winata', 'MI21A', 2, '2022-07-03', '2022-07-26'),
+(6, '20220106', 'Asep Yoga Firmansyah', 'MI21B', 2, '2022-07-03', '2022-07-26');
 
 -- --------------------------------------------------------
 
@@ -184,6 +186,24 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 
 --
+-- Indeks untuk tabel `paslon`
+--
+ALTER TABLE `paslon`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `pemilih`
+--
+ALTER TABLE `pemilih`
+  ADD PRIMARY KEY (`no_identitas`);
+
+--
+-- Indeks untuk tabel `pemilihan`
+--
+ALTER TABLE `pemilihan`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `peserta`
 --
 ALTER TABLE `peserta`
@@ -191,14 +211,38 @@ ALTER TABLE `peserta`
   ADD UNIQUE KEY `nim` (`nim`);
 
 --
+-- Indeks untuk tabel `prodi`
+--
+ALTER TABLE `prodi`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
+
+--
+-- AUTO_INCREMENT untuk tabel `paslon`
+--
+ALTER TABLE `paslon`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT untuk tabel `pemilihan`
+--
+ALTER TABLE `pemilihan`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT untuk tabel `peserta`
 --
 ALTER TABLE `peserta`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT untuk tabel `prodi`
+--
+ALTER TABLE `prodi`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

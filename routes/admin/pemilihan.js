@@ -9,6 +9,9 @@ router.get('/', async (req, res) => {
     const session_store = req.session;
     try {
         const paslon = await Paslon.findAll({
+            where: {
+                status: 0
+            },
             include: [
                 {model: Peserta, as: 'Ketua'},
                 {model: Peserta, as: 'Wakil'}
@@ -19,7 +22,9 @@ router.get('/', async (req, res) => {
             title: 'Pemilihan',
             data: paslon,
             url: req.originalUrl,
-            user: session_store
+            user: session_store,
+            msg: req.flash('msg'),
+            status: req.flash('status'),
         });
     } catch (error) {
         console.log(error);
@@ -27,39 +32,21 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/tambah', async (req, res) => {
-    try {
+    const validation = await Pemilihan.findOne({
+        where: {
+            pemilih_id: req.body.pemilih_id
+        }
+    });
+    if(validation !== null){
+        req.flash('msg','Maaf, anda telah memilih.');
+        req.flash('status','danger');
+        res.redirect('back');
+    }else{
         await Pemilihan.create(req.body);
+        req.flash('msg','Terima kasih anda telah memilih.');
+        req.flash('status','success');
         res.redirect('back');
-    } catch (error) {
-        res.send("Anda sudah memilih!");
     }
 });
-
-router.patch('/update', async (req, res) => {
-    try {
-        await Pemilihan.update(req.body, {
-            where: {
-                id: req.body.id
-            }
-        });
-        res.redirect('back');
-    } catch (error) {
-        console.log(error);
-    }
-});
-
-router.delete('/hapus', async (req, res) => {
-    try {
-        await Pemilihan.destroy({
-            where: {
-                id: req.body.id
-            }
-        });
-        res.redirect('back');
-    } catch (error) {
-        console.log(error);
-    }
-});
-
 
 module.exports = router;

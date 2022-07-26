@@ -1,15 +1,5 @@
 <!-- Begin Page Content -->
 <div class="container-fluid">
-  <% if (typeof errors != 'undefined') {%> 
-    <% errors.forEach(error => { %>
-      <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <%= error.msg %>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-    <% }) %>
-  <% } %> 
   <% if (msg.length !== 0) { %>
     <div class="alert alert-<%= status %> alert-dismissible fade show" role="alert">
       <%= msg %>
@@ -186,7 +176,8 @@
         if (willDelete) {
           document.getElementById(`pesertaHapus${data}`).submit();
           swal("Peserta telah dihapus!", {
-            icon: "success"
+            icon: "success",
+            button: "Selesai"
           });
         } else {
           swal("Peserta tidak jadi dihapus.", {
